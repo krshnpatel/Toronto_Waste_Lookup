@@ -1,0 +1,82 @@
+<div
+  style="text-align:center; background-color:#1565c0; color:white; padding:10px 0 10px 0"
+>
+  <h3 style="font-weight: bold">{{ title }}</h3>
+</div>
+
+<div class="row" style="padding: 10px 10px 10px 40px">
+  <div class="col s11">
+    <mz-input-container>
+      <input
+        #searchField
+        mz-input
+        style="font-size: 20px"
+        placeholder="Search..."
+        (keyup)="onKey($event)"
+        (keyup.enter)="search(searchField.value)"
+      />
+    </mz-input-container>
+  </div>
+  <div class="col s1 left" style="padding: 18px 0 18px 0">
+    <button
+      mz-button
+      class="btn"
+      float="true"
+      (click)="search(searchField.value)"
+    >
+      <i mz-icon [icon]="'search'" [size]="'medium'"></i>
+    </button>
+  </div>
+</div>
+<div *ngIf="enableSearchResults">
+  <div *ngFor="let result of results">
+    <div class="row" style="font-size: 18px">
+      <div class="col s1" style="margin-top: 18px;">
+        <a
+          *ngIf="!check(result)"
+          mz-secondary-content
+          class="left"
+          href="#!"
+          (click)="toggleFavourite(result)"
+          ><i mz-icon style="color: gray" [icon]="'star'" [size]="'small'"></i
+        ></a>
+        <a
+          *ngIf="check(result)"
+          mz-secondary-content
+          class="left"
+          href="#!"
+          (click)="toggleFavourite(result)"
+          ><i mz-icon [icon]="'star'" [size]="'small'"></i
+        ></a>
+      </div>
+      <div class="col s5" style="margin-top: 18px;">
+        <div class="title">{{ result.title }}</div>
+      </div>
+      <div class="col s6"><div [innerHTML]="result.body | unescape"></div></div>
+    </div>
+  </div>
+</div>
+<div class="row" style="background-color: #edffed">
+  <h4
+    style="font-weight: bold; color: forestgreen; padding: 25px 25px 15px 25px; margin-bottom: 0;"
+  >
+    Favourites
+  </h4>
+  <div *ngFor="let fav of favourites">
+    <div class="row" style="font-size: 18px">
+      <div class="col s1" style="margin-top: 18px;">
+        <a
+          mz-secondary-content
+          class="left"
+          href="#!"
+          (click)="toggleFavourite(fav)"
+          ><i mz-icon [icon]="'star'" [size]="'small'"></i
+        ></a>
+      </div>
+      <div class="col s5" style="margin-top: 18px;">
+        <div class="title">{{ fav.title }}</div>
+      </div>
+      <div class="col s6"><div [innerHTML]="fav.body | unescape"></div></div>
+    </div>
+  </div>
+</div>
